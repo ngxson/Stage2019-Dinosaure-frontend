@@ -11,14 +11,11 @@ import Config from '../Config'
 import Utils from '../Utils'
 import { Redirect } from 'react-router'
 
-class Welcome extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super()
     this.props = props
     this.state = {}
-  }
-
-  componentDidMount() {
     this.props.changeHeader('Login')
   }
 
@@ -33,10 +30,12 @@ class Welcome extends React.Component {
         text: 'Please fill in your username and password'
       })
     } else {
+      this.setState({loading: true})
       const {username, password} = this.state
       const res = await axios.post(`${Config.BACKEND}/login`, {
         username, password
       })
+      this.setState({loading: false})
       if (res.data.token) {
         Utils.setLocalStorage('token', res.data.token)
         this.setState({redirect: '/'})
@@ -70,7 +69,7 @@ class Welcome extends React.Component {
 
     const loading = <div>
       <br/><br/><br/>
-      <CircularProgress />
+      <center><CircularProgress /></center>
     </div>
 
     const form = (
@@ -82,7 +81,7 @@ class Welcome extends React.Component {
             <TextField
               label="Username"
               type="text"
-              value={this.state.quiz1}
+              value={this.state.username}
               style={classes.input}
               onChange={this.handleChange('username')}
               margin="normal"
@@ -90,7 +89,7 @@ class Welcome extends React.Component {
             <TextField
               label="Password"
               type="password"
-              value={this.state.quiz1}
+              value={this.state.password}
               style={classes.input}
               onChange={this.handleChange('password')}
               margin="normal"
@@ -106,4 +105,4 @@ class Welcome extends React.Component {
   }
 }
 
-export default Welcome
+export default Login

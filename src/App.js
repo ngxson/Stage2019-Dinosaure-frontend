@@ -1,6 +1,7 @@
 import React from 'react';
 import Theme from './Theme';
 import LoginLayout from './layouts/Login';
+import HomeLayout from './layouts/Home';
 import './App.css';
 import Header from './components/Header';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -28,7 +29,9 @@ class Main extends React.Component {
     }
 
     const Home = () => {
-      return <h1>Home</h1>
+      return <HomeLayout
+        alert={this.alert}
+        changeHeader={this.changeHeader.bind(this)} />
     }
 
     return (
