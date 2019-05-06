@@ -28,6 +28,12 @@ class Main extends React.Component {
         changeHeader={this.changeHeader.bind(this)} />
     }
 
+    const Register = () => {
+      return <LoginLayout register={true}
+        alert={this.alert}
+        changeHeader={this.changeHeader.bind(this)} />
+    }
+
     const Home = () => {
       return <HomeLayout
         alert={this.alert}
@@ -43,6 +49,7 @@ class Main extends React.Component {
             <div className="mainView">
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
             </div>
             <Alert ref={this.alert} />
           </React.Fragment>

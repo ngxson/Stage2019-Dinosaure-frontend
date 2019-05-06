@@ -16,7 +16,8 @@ class Login extends React.Component {
     super()
     this.props = props
     this.state = {}
-    this.props.changeHeader('Login')
+    if (this.props.register) this.props.changeHeader('Register')
+    else this.props.changeHeader('Login')
   }
 
   handleChange = name => event => {
@@ -39,6 +40,34 @@ class Login extends React.Component {
       if (res.data.token) {
         Utils.setLocalStorage('token', res.data.token)
         this.setState({redirect: '/'})
+      } else {
+        return this.props.alert.current.show({
+          title: 'Error',
+          text: res.data.error
+        })
+      }
+    }
+  }
+
+  async onRegister() {
+    if (this.state.username === '' || this.state.password === '') {
+      return this.props.alert.current.show({
+        title: 'Please fill in',
+        text: 'Please fill in your username and password'
+      })
+    } else {
+      this.setState({loading: true})
+      const {username, password} = this.state
+      const res = await axios.post(`${Config.BACKEND}/register`, {
+        username, password
+      })
+      this.setState({loading: false})
+      if (res.data._id) {
+        this.props.alert.current.show({
+          title: 'Register successful',
+          text: 'Please login to continue'
+        })
+        this.setState({redirect: '/login'})
       } else {
         return this.props.alert.current.show({
           title: 'Error',
@@ -77,7 +106,10 @@ class Login extends React.Component {
         <Card style={classes.cardStyle}>
           <CardContent>
             <Typography variant="h5" component="h2">Dinosaur</Typography>
-            <Typography color="textSecondary">Please login to continue</Typography>
+            {this.props.register
+              ? <Typography color="textSecondary">Please fill in the registration form</Typography>
+              : <Typography color="textSecondary">Please login to continue</Typography>
+            }
             <TextField
               label="Username"
               type="text"
@@ -94,7 +126,16 @@ class Login extends React.Component {
               onChange={this.handleChange('password')}
               margin="normal"
             />
-            <Button onClick={this.onLogin.bind(this)} color='primary'>Login</Button>
+            {this.props.register
+              ? <div>
+                  <Button onClick={this.onRegister.bind(this)} color='primary'>Register</Button>
+                  <Button onClick={() => this.setState({redirect: '/login'})} color='primary'>Back</Button>
+                </div>
+              : <div>
+                  <Button onClick={this.onLogin.bind(this)} color='primary'>Login</Button>
+                  <Button onClick={() => this.setState({redirect: '/register'})} color='primary'>Register</Button>
+                </div>
+            }
           </CardContent>        
         </Card>
       </div>
