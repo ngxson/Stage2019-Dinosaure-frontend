@@ -99,7 +99,7 @@ class Header extends React.Component {
                 onClose={this.handleClose}
               >
                 <MenuItem onClick={() => {window.location.href = '/'}}>Profile</MenuItem>
-                <MenuItem onClick={() => {window.location.href = '/friend'}}>Friends</  MenuItem>
+                <MenuItem onClick={() => {window.location.href = '/friends'}}>Friends</  MenuItem>
                 <MenuItem onClick={this.doLogout.bind(this)}>Logout</  MenuItem>
               </Menu>
             </div> : null}

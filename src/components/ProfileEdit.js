@@ -27,7 +27,7 @@ const classes = {
   }
 }
 
-class Profile extends React.Component {
+class ProfileEdit extends React.Component {
   constructor(props) {
     super()
     this.props = props
@@ -95,4 +95,4 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile
+export default ProfileEdit

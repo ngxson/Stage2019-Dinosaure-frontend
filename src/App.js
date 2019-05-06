@@ -2,6 +2,7 @@ import React from 'react';
 import Theme from './Theme';
 import LoginLayout from './layouts/Login';
 import HomeLayout from './layouts/Home';
+import FriendsLayout from './layouts/Friends';
 import './App.css';
 import Header from './components/Header';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -40,6 +41,12 @@ class Main extends React.Component {
         changeHeader={this.changeHeader.bind(this)} />
     }
 
+    const Friends = () => {
+      return <FriendsLayout
+        alert={this.alert}
+        changeHeader={this.changeHeader.bind(this)} />
+    }
+
     return (
       <Router>
         <MuiThemeProvider theme={Theme}>
@@ -50,6 +57,7 @@ class Main extends React.Component {
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
+              <Route path="/friends" component={Friends} />
             </div>
             <Alert ref={this.alert} />
           </React.Fragment>

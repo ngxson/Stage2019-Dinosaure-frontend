@@ -24,7 +24,7 @@ class Profile extends React.Component {
             <p><b>Family: </b>{profile.family}</p>
             <p><b>Race: </b>{profile.race}</p>
             <p><b>Food: </b>{profile.food}</p>
-            {this.props.unfriend ? <Button onClick={this.props.unfriend} color='primary'>Unfriend</Button> : null}
+            {this.props.remove ? <Button onClick={this.props.remove} color='primary'>Remove</Button> : null}
             {this.props.edit ? <Button onClick={this.props.edit} color='primary'>Edit Profile</Button> : null}
           </CardContent>        
         </Card>

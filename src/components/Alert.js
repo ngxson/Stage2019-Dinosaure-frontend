@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 class Alert extends React.Component {
   state = {
     open: false,
-    onClose: null
+    onClickOK: null
   };
 
   show(data) {
@@ -17,15 +17,20 @@ class Alert extends React.Component {
       open: true,
       title: data.title,
       text: data.text,
-      onClose: data.onClose || null
+      onClickOK: data.onClickOK || null,
+      showCancel: data.showCancel
     })
   }
 
   handleClose = () => {
-    if (this.state.onClose) {
-      this.state.onClose();
-      this.setState({ onClose: null });
+    if (this.state.onClickOK) {
+      this.state.onClickOK();
+      this.setState({ onClickOK: null });
     }
+    this.setState({ open: false });
+  };
+
+  handleCancel = () => {
     this.setState({ open: false });
   };
 
@@ -45,9 +50,10 @@ class Alert extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              OK
-            </Button>
+            <Button onClick={this.handleClose.bind(this)} color="primary" autoFocus>OK</Button>
+            {this.state.showCancel
+              ? <Button onClick={this.handleCancel.bind(this)} color="primary" autoFocus>Cancel</Button>
+              : null}
           </DialogActions>
         </Dialog>
       </div>
